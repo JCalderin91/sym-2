@@ -51,7 +51,7 @@
   </div>
 
 
-  <!-- Content -->
+  <!-- Container -->
   <div class="mx-4">
     <div class="row mt-5">
 
@@ -67,15 +67,15 @@
       </div>
 
       <div class="col-md-6">
-        <div class="form-gruoup" id="time">
-          <label for="">Tiempo de la corrida</label>
+        <div class="form-gruoup stop_conditions" id="time">
+          <label for="">Tiempo de la corrida (seg)</label>
           <input type="number" class="form-control" min="0">
         </div>
-        <div class="form-gruoup d-none" id="request">
+        <div class="form-gruoup stop_conditions d-none" id="request">
           <label for="">Número de solicitudes</label>
           <input type="number" class="form-control" min="0">
         </div>
-        <div class="form-gruoup d-none" id="service">
+        <div class="form-gruoup stop_conditions d-none" id="service">
           <label for="">Número de servicios</label>
           <input type="number" class="form-control" min="0">
         </div>
@@ -92,51 +92,55 @@
         <div class="row">
           <div class="col-md-4">
             <div class="form-group">
-              <label for="">condition</label>
-              <input type="text" class="form-control">
+              <label for="">Tiempo de solicitud (seg)</label>
+              <input type="text" class="form-control" id="timeRequestInit">
             </div>
           </div>
           <div class="col-md-4">
             <div class="form-group">
-              <label for="">condition</label>
-              <input type="text" class="form-control">
+              <label for="">Tiempo de servicio (seg)</label>
+              <input type="text" class="form-control" id="timeServiceInit">
             </div>
           </div>
           <div class="col-md-4">
             <div class="form-group">
-              <label for="">condition</label>
-              <input type="text" class="form-control">
+              <label for="">Entidades</label>
+              <input type="text" class="form-control" id="entityInit">
             </div>
           </div>
         </div>
       </div>
 
       <div class="col-md-12  mt-3">
-        <div class="form-group">
-          <label for="">&nbsp;</label>
-          <button class="btn btn-sm btn-info  float-right">Comenzar</button>
-        </div>
+
+        <button id="begin" class="btn btn-sm btn-success ml-2 float-right">Comenzar</button>
+        <button id="another" class="btn btn-sm btn-info  float-right">Reiniciar</button>
+
       </div>
 
 
-      <div class="col-12">
+      <div class="col-12 mt-3">
         <table class="table table-sm">
           <thead class="bg-dark text-white">
             <tr>
-              <td>col 1</td>
-              <td>col 2</td>
-              <td>col 3</td>
-              <td>col 4</td>
-              <td>col 5</td>
-              <td>col 6</td>
+              <td>#</td>
+              <td>tr</td>
+              <td>eqo</td>
+              <td>ne</td>
+              <td>ri</td>
+              <td>eg</td>
+              <td>le</td>
             </tr>
           </thead>
+          <tbody id="resultsBody">
+            
+          </tbody>
         </table>
       </div>
 
     </div>
   </div>
-  <!-- /Content -->
+  <!-- /Container -->
 
   <!-- Optional JavaScript -->
   <!-- jQuery first, then Popper.js, then Bootstrap JS -->
