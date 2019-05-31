@@ -52,19 +52,52 @@ $(document).ready(function () {
       'condition': $('#stop-conditions').val(),
       'value': $('.stop_conditions').not('.d-none').find('input').val(),
     }
+ 
+   
 
-    
-    init = {
-      'tr': 0,
-      'eqo': '-',
-      'ne': 0,
-      'ri': 0,
-      'eg': [],
-      'le': []
-    }
-    results.push(init)
+    if ($('#inicial-conditions')[0].checked) {
+        init = {
+          'tr': 0,
+          'eqo': '-',
+          'ne': $('#entityInit').val(),
+          'ri': 0,
+          'eg': [],
+          'le': []
+        }
+        if ($('#timeRequestInit').val() != '') {
+          init.le.push({
+            'e': 'E1',
+            't': $('#timeRequestInit').val()
+          })
+        }
+        if ($('#timeServiceInit').val() != '') {
+          init.le.push({
+            'e': 'E2',
+            't': $('#timeServiceInit').val()
+          })
+        }
+        if (stop.condition == 'time') {
+          init.le.push({
+            'e': 'E3',
+            't': stop.time
+          })
+        }
+      }else{
+          init = {
+            'tr': 0,
+            'eqo': '-',
+            'ne': 0,
+            'ri': 0,
+            'eg': [],
+            'le': []
+          }
+      }
 
-    if(results[results.length-1].le.length == 0){
+      
+     results.push(init)
+
+
+
       let pseudo = Math.random()
       let t = generateEventIn(pseudo);
 
@@ -85,7 +118,7 @@ $(document).ready(function () {
         }]
       }
       results.push(init)
-    }
+    
 
     if(results[results.length-1].le.length > 0){
       let pseudo = Math.random()
