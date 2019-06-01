@@ -360,7 +360,7 @@ $(document).ready(function () {
       limit++ //Por seguridad
       console.log(veryfyStop(results, stop))
       console.log(limit<32)
-    }while(veryfyStop(results, stop) && limit < 32)
+    }while(veryfyStop(results, stop) && limit < 200)
     
 
 
