@@ -1,13 +1,15 @@
 //Cuando el documento este cargafo ejecutar
 $(document).ready(function () {
 //Cuando se haga click en el boton para reiniciar
-
+  //Generador de solicitud de servicio
   function generateEventIn(pseudo) {
     return (-5 * Math.log(pseudo)).toFixed(2)
   }
+  //Generador de evento de salida01
   function generateEventService(pseudo) {
     return (-7.5 * Math.log(pseudo)).toFixed(2)
   }
+  //Ordenar de mayor a menor la lista de eventos
   function sortArray(arr, dir){
     return arr.sort(function (a, b) {
       if(dir === 'asc'){
@@ -19,7 +21,7 @@ $(document).ready(function () {
       }
     })
   }
-
+  //Ordenar los eventos de alida y entrada
   function sortArrayEvent(arr, dir){
     return arr.sort(function (a, b) {
       if(dir === 'asc'){
@@ -32,6 +34,7 @@ $(document).ready(function () {
     })
   }
 
+  //Quitar un evento de la lista de eventos
   function deleteOne(arr, value){
     let auxArr = arr.slice()
     auxArr.forEach((item,key)=>{
@@ -80,11 +83,15 @@ $(document).ready(function () {
   var pseudo;
   var t;
   var lastEvent;
+  var stop;
 
   $('#begin').on('click', function () {
     results = []
+    results = []
+    inPatter = [];
+    servicePatter = [];
 
-    var stop = {
+    stop = {
       'condition': $('#stop-conditions').val(),
       'value': $('.stop_conditions').not('.d-none').find('input').val(),
     }
@@ -92,6 +99,7 @@ $(document).ready(function () {
    //console.log(stop)
 
     if ($('#inicial-conditions')[0].checked) {
+        
         init = {
           'tr': 0,
           'eqo': '-',
@@ -169,7 +177,7 @@ $(document).ready(function () {
         pseudo = Math.random().toFixed(3);
         t = generateEventIn(pseudo);
         inPatter.push({
-          'cant': servicePatter.length,
+          'cant': inPatter.length,
           'pseudo' : pseudo,
           't' : t
         });
@@ -197,7 +205,7 @@ $(document).ready(function () {
           pseudo = Math.random().toFixed(3);
           t = generateEventIn(pseudo);
           inPatter.push({
-            'cant': servicePatter.length,
+            'cant': inPatter.length,
             'pseudo' : pseudo,
             't' : t
           });
@@ -358,8 +366,7 @@ $(document).ready(function () {
 
 
       limit++ //Por seguridad
-      console.log(veryfyStop(results, stop))
-      console.log(limit<32)
+
     }while(veryfyStop(results, stop) && limit < 200)
     
 
@@ -414,7 +421,7 @@ $(document).ready(function () {
     template = ''
     sortArrayEvent(inPatter, 'asc').forEach((item, key)=>{
       template += `<tr>
-                <td>Exp${item.cant} = -5 m/c Ln ${item.pseudo} = ${item.t}</td>
+                <td>Exp${item.cant+1} = -5 m/c Ln ${item.pseudo} = ${item.t}</td>
               </tr>`;
     })
 
@@ -423,7 +430,7 @@ $(document).ready(function () {
     template = ''
     sortArrayEvent(servicePatter, 'asc').forEach((item, key)=>{
       template += `<tr>
-                <td>Exp${key+1} = -7.5 m/c Ln ${item.pseudo} = ${item.t}</td>
+                <td>Exp${item.cant+1} = -7.5 m/c Ln ${item.pseudo} = ${item.t}</td>
               </tr>`;
     })
     $('#servicePatter').html(template)
@@ -476,19 +483,35 @@ $(document).ready(function () {
       'value' : max
     })
 
-/*    //5
+    //5
+    aux = 0;
+    if(inPatter.length>0){
+      inPatter.forEach((item)=>{
+        aux += parseFloat(item.t)
+      })
+      aux = (aux / inPatter.length).toFixed(2)
+    }
+
     response.push({
       'title' : 'Tiempo promedio entre llegadas',
-      'value' : (inPatter.reduce(function(a, b){return a + b}) / inPatter.length).toFixed(2)
+      'value' : aux
     })
 
 
     //6
+    aux = 0;
+    if(servicePatter.length>0){
+      servicePatter.forEach((item)=>{
+        aux += parseFloat(item.t)
+      })
+      aux = (aux / inPatter.length).toFixed(2)
+    }
+
     response.push({
       'title' : 'Tiempo promedio entre servicios',
-      'value' : (servicePatter.reduce(function(a, b){return a + b}) / servicePatter.length).toFixed(2)
+      'value' : aux
     })
-      */
+ 
     return  response
   }
 
