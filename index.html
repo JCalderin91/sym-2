@@ -58,9 +58,9 @@
       <div class="col-md-6">
         <div class="form-group">
           <label for="">Selecione condicion de parada</label>
-          <select name="stop-conditions" id="stop-conditions" class="form-control">
+          <select name="stop-conditions" id="stop-conditions" class="custom-select">
             <option value="time">Tiempo</option>
-            <option value="request">Solicitudes</option>
+            <option value="request" checket>Solicitudes</option>
             <option value="service">Servicios</option>
           </select>
         </div>
@@ -119,7 +119,7 @@
       </div>
 
 
-      <div class="col-12 mt-3">
+      <div class="col-md-8 mt-3">
         <table class="table table-sm">
           <thead class="bg-dark text-white">
             <tr>
@@ -137,6 +137,33 @@
           </tbody>
         </table>
       </div>
+      <div class="col-md-4 mt-3">
+        <div class="row">
+          <div class="col-12">
+            <table class="table table-sm">
+              <thead class="bg-dark text-white">
+                <tr>
+                  <td>Evento de salida</td>
+                </tr>
+              </thead>
+              <tbody id="inPatter">
+                
+              </tbody>
+            </table>
+          </div>
+          <div class="col-12 mt-2">
+            <table class="table table-sm">
+              <thead class="bg-dark text-white">
+                <tr>
+                  <td>Envento de servicio</td>
+                </tr>
+              </thead>
+              <tbody id="servicePatter"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
       <div class="row mt-3">
         <div class="col-12">
           <h5>Respuestas</h5>
