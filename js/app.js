@@ -1,6 +1,11 @@
 //Cuando el documento este cargafo ejecutar
 $(document).ready(function () {
-//Cuando se haga click en el boton para reiniciar
+  $('#inicial-conditions')[0].checked = false
+  $('input[type="text"], input[type="number"] ').each(function () {
+    //y se vacian
+    $(this)[0].value = '';
+  })
+  //Cuando se haga click en el boton para reiniciar
   //Generador de solicitud de servicio
   function generateEventIn(pseudo) {
     return (-5 * Math.log(pseudo)).toFixed(2)
@@ -10,24 +15,24 @@ $(document).ready(function () {
     return (-7.5 * Math.log(pseudo)).toFixed(2)
   }
   //Ordenar de mayor a menor la lista de eventos
-  function sortArray(arr, dir){
+  function sortArray(arr, dir) {
     return arr.sort(function (a, b) {
-      if(dir === 'asc'){
+      if (dir === 'asc') {
         return (parseFloat(a.t) - parseFloat(b.t))
-      }else{
-        if(dir === 'des'){
+      } else {
+        if (dir === 'des') {
           return (parseFloat(b.t) - parseFloat(a.t))
         }
       }
     })
   }
   //Ordenar los eventos de alida y entrada
-  function sortArrayEvent(arr, dir){
+  function sortArrayEvent(arr, dir) {
     return arr.sort(function (a, b) {
-      if(dir === 'asc'){
+      if (dir === 'asc') {
         return (parseFloat(a.cant) - parseFloat(b.cant))
-      }else{
-        if(dir === 'des'){
+      } else {
+        if (dir === 'des') {
           return (parseFloat(b.cant) - parseFloat(a.cant))
         }
       }
@@ -35,23 +40,18 @@ $(document).ready(function () {
   }
 
   //Quitar un evento de la lista de eventos
-  function deleteOne(arr, value){
+  function deleteOne(arr, value) {
     let auxArr = arr.slice()
-    auxArr.forEach((item,key)=>{
-      if(item.e == value){
-        return auxArr.splice(key,1);
+    auxArr.forEach((item, key) => {
+      if (item.e == value) {
+        return auxArr.splice(key, 1);
       }
     })
     return auxArr;
   }
 
 
-  $('#another').on('click', ()=>{
-    //se hace un recorrido de todos los imputs
-    $('input[type="text"], input[type="number"] ').each(function() {
-      //y se vacian
-      $(this)[0].value = '';
-    })
+  $('#another').on('click', () => {
     // y se recarga el documento
     location.reload();
   })
@@ -85,6 +85,8 @@ $(document).ready(function () {
   var lastEvent;
   var stop;
 
+
+
   $('#begin').on('click', function () {
     results = []
     results = []
@@ -95,43 +97,47 @@ $(document).ready(function () {
       'condition': $('#stop-conditions').val(),
       'value': $('.stop_conditions').not('.d-none').find('input').val(),
     }
- 
-   //console.log(stop)
+
+    //console.log(stop)
 
     if ($('#inicial-conditions')[0].checked) {
-        
-        init = {
-          'tr': 0,
-          'eqo': '-',
-          'ne': $('#entityInit').val(),
-          'ri': 0,
-          'eg': [],
-          'le': []
-        }
-        if ($('#timeRequestInit').val() != '') {
-          init.le.push({
-            'e': 'E1',
-            't': $('#timeRequestInit').val()
-          })
-        }
-        if ($('#timeServiceInit').val() != '') {
-          init.le.push({
-            'e': 'E2',
-            't': $('#timeServiceInit').val()
-          })
-        }
-        if (stop.condition == 'time') {
-          init.le.push({
-            'e': 'E3',
-            't': stop.time
-          })
-        }
-       if(veryfyStop(results, stop)) results.push(init)
-    }else{
+
+      init = {
+        'tr': 0,
+        'eqo': '-',
+        'ne': parseInt($('#entityInit').val()),
+        'ri': 0,
+        'eg': '-',
+        'le': []
+      }
+      if ($('#timeRequestInit').val() != '') {
+        init.le.push({
+          'e': 'E1',
+          't': $('#timeRequestInit').val()
+        })
+      }
+      if ($('#timeServiceInit').val() != '') {
+        init.le.push({
+          'e': 'E2',
+          't': $('#timeServiceInit').val()
+        })
+      }
+      if (stop.condition == 'time') {
+        init.le.push({
+          'e': 'E3',
+          't': stop.value
+        })
+      }
+
+      if (veryfyStop(results, stop)) results.push(init)
+      console.log(results)
+
+    } else {
+
       let aux = [];
-      if(stop.condition == 'time'){
+      if (stop.condition == 'time') {
         aux = [{
-          'e':'E3',
+          'e': 'E3',
           't': parseFloat(stop.value)
         }]
       }
@@ -143,24 +149,24 @@ $(document).ready(function () {
         'eg': '-',
         'le': aux
       }
-      if(veryfyStop(results, stop)) results.push(init)
-        
+      if (veryfyStop(results, stop)) results.push(init)
+
     }
 
-      
-    
 
-    function veryfyStop(arr, conditions){
-      switch(conditions.condition){
+
+
+    function veryfyStop(arr, conditions) {
+      switch (conditions.condition) {
         case "request":
-          var request = arr.filter((result) => result.eqo == 'E1' ).length
-          if(request >= conditions.value) return false
-        break;
+          var request = arr.filter((result) => result.eqo == 'E1').length
+          if (request >= conditions.value) return false
+          break;
 
         case "service":
-        var services = arr.filter((result) => result.eqo == 'E2' ).length
-          if(services >= conditions.value) return false
-        break;
+          var services = arr.filter((result) => result.eqo == 'E2').length
+          if (services >= conditions.value) return false
+          break;
 
       }
       return true;
@@ -169,17 +175,17 @@ $(document).ready(function () {
 
 
     var limit = 1;
-    
-    do{
+
+    do {
       //console.log(results)
 
-      if(!$('#inicial-conditions')[0].checked && results.length <= 1){
+      if (!$('#inicial-conditions')[0].checked && results.length <= 1) {
         pseudo = Math.random().toFixed(3);
         t = generateEventIn(pseudo);
         inPatter.push({
           'cant': inPatter.length,
-          'pseudo' : pseudo,
-          't' : t
+          'pseudo': pseudo,
+          't': t
         });
 
         init = {
@@ -191,200 +197,200 @@ $(document).ready(function () {
             'e': 'E1',
             't': t
           }],
-          'le': sortArray(results[results.length-1].le.concat({
+          'le': sortArray(results[results.length - 1].le.concat({
             'e': 'E1',
             't': t
-          }) , 'asc')
+          }), 'asc')
         }
 
-        if(veryfyStop(results, stop)) results.push(init)
+        if (veryfyStop(results, stop)) results.push(init)
 
-        if(results[results.length-1].le[0].e != 'E3'){
+        if (results[results.length - 1].le[0].e != 'E3') {
 
-          let newLe = deleteOne(results[results.length-1].le, 'E1')
+          let newLe = deleteOne(results[results.length - 1].le, 'E1')
           pseudo = Math.random().toFixed(3);
           t = generateEventIn(pseudo);
           inPatter.push({
             'cant': inPatter.length,
-            'pseudo' : pseudo,
-            't' : t
+            'pseudo': pseudo,
+            't': t
           });
 
           init = {
-            'tr': parseFloat(inPatter[inPatter.length-2].t).toFixed(2),
+            'tr': parseFloat(inPatter[inPatter.length - 2].t).toFixed(2),
             'eqo': 'E1',
-            'ne': parseInt( results[results.length-1].ne ) + 1,
+            'ne': parseInt(results[results.length - 1].ne) + 1,
             'ri': pseudo,
             'eg': [{
               'e': 'E1',
-              't': (parseFloat(inPatter[inPatter.length-2].t) + parseFloat(t)).toFixed(2)
+              't': (parseFloat(inPatter[inPatter.length - 2].t) + parseFloat(t)).toFixed(2)
             }],
             'le': sortArray(newLe.concat({
               'e': 'E1',
-              't': (parseFloat(inPatter[inPatter.length-2].t) + parseFloat(t)).toFixed(2)
-            }) , 'asc')
+              't': (parseFloat(inPatter[inPatter.length - 2].t) + parseFloat(t)).toFixed(2)
+            }), 'asc')
 
           }
-          if(veryfyStop(results, stop)) results.push(init)
+          if (veryfyStop(results, stop)) results.push(init)
 
           pseudo = Math.random().toFixed(3);
           t = generateEventService(pseudo);
           servicePatter.push({
             'cant': servicePatter.length,
-            'pseudo' : pseudo,
-            't' : t
+            'pseudo': pseudo,
+            't': t
           });
-          
-          newLe = deleteOne(results[results.length-1].le, 'E2')
+
+          newLe = deleteOne(results[results.length - 1].le, 'E2')
 
           init = {
-            'tr': results[results.length-1].tr,
+            'tr': results[results.length - 1].tr,
             'eqo': '-',
-            'ne': parseInt( results[results.length-1].ne ),
+            'ne': parseInt(results[results.length - 1].ne),
             'ri': pseudo,
             'eg': [{
               'e': 'E2',
-              't': (parseFloat(results[results.length-1].tr) + parseFloat(t)).toFixed(2)
+              't': (parseFloat(results[results.length - 1].tr) + parseFloat(t)).toFixed(2)
             }],
             'le': sortArray(newLe.concat({
               'e': 'E2',
-              't': (parseFloat(results[results.length-1].tr) + parseFloat(t)).toFixed(2)
-            }) , 'asc')
+              't': (parseFloat(results[results.length - 1].tr) + parseFloat(t)).toFixed(2)
+            }), 'asc')
           }
 
-          if(veryfyStop(results, stop)) results.push(init)
+          if (veryfyStop(results, stop)) results.push(init)
         }
 
       }
 
-   
 
 
 
 
-      lastEvent = results[results.length-1].le[0].e
-      console.log('Ultimo evento: '+lastEvent)
 
-      if(lastEvent == 'E2'){
-        let newLe = deleteOne(results[results.length-1].le, 'E2')
+      lastEvent = results[results.length - 1].le[0].e
+      console.log('Ultimo evento: ' + lastEvent)
+
+      if (lastEvent == 'E2') {
+        let newLe = deleteOne(results[results.length - 1].le, 'E2')
         pseudo = Math.random().toFixed(3);
         t = generateEventService(pseudo);
 
         servicePatter.push({
           'cant': servicePatter.length,
-          'pseudo' : pseudo,
-          't' : t
+          'pseudo': pseudo,
+          't': t
         });
 
-        if((parseInt(results[results.length-1].ne)-1) > 0){
+        if ((parseInt(results[results.length - 1].ne) - 1) > 0) {
           init = {
-            'tr': results[results.length-1].le[0].t,
+            'tr': results[results.length - 1].le[0].t,
             'eqo': 'E2',
-            'ne': parseInt( results[results.length-1].ne)  -1,
+            'ne': parseInt(results[results.length - 1].ne) - 1,
             'ri': pseudo,
             'eg': [{
               'e': 'E2',
-              't': (parseFloat(results[results.length-1].le[0].t) + parseFloat(t)).toFixed(2)
+              't': (parseFloat(results[results.length - 1].le[0].t) + parseFloat(t)).toFixed(2)
             }],
             'le': sortArray(newLe.concat({
               'e': 'E2',
-              't': (parseFloat(results[results.length-1].le[0].t) + parseFloat(t)).toFixed(2)
-            }) , 'asc')
+              't': (parseFloat(results[results.length - 1].le[0].t) + parseFloat(t)).toFixed(2)
+            }), 'asc')
           }
-        }else{
+        } else {
           init = {
-            'tr': results[results.length-1].le[0].t,
+            'tr': results[results.length - 1].le[0].t,
             'eqo': 'E2',
-            'ne': parseInt( results[results.length-1].ne)  -1,
+            'ne': parseInt(results[results.length - 1].ne) - 1,
             'ri': pseudo,
             'eg': '-',
             'le': sortArray(newLe, 'asc')
-           }
+          }
         }
 
-        if(veryfyStop(results, stop)) results.push(init)
+        if (veryfyStop(results, stop)) results.push(init)
       }
 
-      if(lastEvent == 'E1'){
-          pseudo = Math.random().toFixed(3);
-          t = generateEventIn(pseudo);
+      if (lastEvent == 'E1') {
+        pseudo = Math.random().toFixed(3);
+        t = generateEventIn(pseudo);
 
-          inPatter.push({
-            'cant': inPatter.length,
-            'pseudo' : pseudo,
-            't' : t
-          });
+        inPatter.push({
+          'cant': inPatter.length,
+          'pseudo': pseudo,
+          't': t
+        });
 
-          let newTr = results[results.length-1].le[0].t
+        let newTr = results[results.length - 1].le[0].t
 
-          let newLe = deleteOne(results[results.length-1].le, 'E1')
+        let newLe = deleteOne(results[results.length - 1].le, 'E1')
+        init = {
+          'tr': newTr,
+          'eqo': 'E1',
+          'ne': parseInt(results[results.length - 1].ne) + 1,
+          'ri': pseudo,
+          'eg': [{
+            'e': 'E1',
+            't': (parseFloat(newTr) + parseFloat(t)).toFixed(2)
+          }],
+          'le': sortArray(newLe.concat({
+            'e': 'E1',
+            't': (parseFloat(newTr) + parseFloat(t)).toFixed(2)
+          }), 'asc')
+
+        }
+        if (veryfyStop(results, stop)) results.push(init)
+        let flag = init.le.filter((result) => result.e == 'E2').length
+
+        if (flag == 0) {
+          newLe = deleteOne(results[results.length - 1].le, 'E2')
+
           init = {
-            'tr': newTr,
-            'eqo': 'E1',
-            'ne': parseInt( results[results.length-1].ne ) + 1,
+            'tr': results[results.length - 1].tr,
+            'eqo': '-',
+            'ne': parseInt(results[results.length - 1].ne),
             'ri': pseudo,
             'eg': [{
-              'e': 'E1',
-              't': (parseFloat(newTr) + parseFloat(t)).toFixed(2)
+              'e': 'E2',
+              't': (parseFloat(results[results.length - 1].tr) + parseFloat(t)).toFixed(2)
             }],
             'le': sortArray(newLe.concat({
-              'e': 'E1',
-              't': (parseFloat(newTr) + parseFloat(t)).toFixed(2)
-            }) , 'asc')
-
-          }
-          if(veryfyStop(results, stop)) results.push(init)
-          let flag = init.le.filter((result) => result.e == 'E2' ).length
-
-          if(flag == 0){
-            newLe = deleteOne(results[results.length-1].le, 'E2')
-
-            init = {
-              'tr': results[results.length-1].tr,
-              'eqo': '-',
-              'ne': parseInt( results[results.length-1].ne ),
-              'ri': pseudo,
-              'eg': [{
-                'e': 'E2',
-                't': (parseFloat(results[results.length-1].tr) + parseFloat(t)).toFixed(2)
-              }],
-              'le': sortArray(newLe.concat({
-                'e': 'E2',
-                't': (parseFloat(results[results.length-1].tr) + parseFloat(t)).toFixed(2)
-              }) , 'asc')
-            }
-
-            if(veryfyStop(results, stop)) results.push(init)
+              'e': 'E2',
+              't': (parseFloat(results[results.length - 1].tr) + parseFloat(t)).toFixed(2)
+            }), 'asc')
           }
 
-           
+          if (veryfyStop(results, stop)) results.push(init)
         }
 
 
-      
+      }
+
+
+
 
 
 
       limit++ //Por seguridad
 
-    }while(veryfyStop(results, stop) && limit < 200)
-    
+    } while (veryfyStop(results, stop) && limit < 200)
 
 
 
 
-     
- 
 
-   var respuestas = verify__results(results, inPatter, servicePatter)
-   let template, subTemplate, aux;
-   template = '';
 
-   respuestas.forEach(function(item) {
-     template += `<li class="list-item-group">${item.title}: ${item.value}</li>`
-   })
 
-   $('#respuestas').html(template)
+
+    var respuestas = verify__results(results, inPatter, servicePatter)
+    let template, subTemplate, aux;
+    template = '';
+
+    respuestas.forEach(function (item) {
+      template += `<li class="list-item-group">${item.title}: ${item.value}</li>`
+    })
+
+    $('#respuestas').html(template)
 
     template = '';
     aux = '';
@@ -419,7 +425,7 @@ $(document).ready(function () {
     })
 
     template = ''
-    sortArrayEvent(inPatter, 'asc').forEach((item, key)=>{
+    sortArrayEvent(inPatter, 'asc').forEach((item, key) => {
       template += `<tr>
                 <td>Exp${item.cant+1} = -5 m/c Ln ${item.pseudo} = ${item.t}</td>
               </tr>`;
@@ -428,7 +434,7 @@ $(document).ready(function () {
     $('#inPatter').html(template)
 
     template = ''
-    sortArrayEvent(servicePatter, 'asc').forEach((item, key)=>{
+    sortArrayEvent(servicePatter, 'asc').forEach((item, key) => {
       template += `<tr>
                 <td>Exp${item.cant+1} = -7.5 m/c Ln ${item.pseudo} = ${item.t}</td>
               </tr>`;
@@ -443,76 +449,77 @@ $(document).ready(function () {
   //Nota 4
   function verify__results(results, inPatter, servicePatter) {
     var response = []
-     //1
+    //1
     response.push({
       'title': 'numero de entradas efectuadas',
-      'value': results.filter((result) => result.eqo == 'E1' ).length
+      'value': results.filter((result) => result.eqo == 'E1').length
     });
 
 
     //2 
     response.push({
-      'title' : 'Numero de entidades atendidas',
-      'value' : results.filter((result) => result.eqo == 'E2' ).length
+      'title': 'Numero de entidades atendidas',
+      'value': results.filter((result) => result.eqo == 'E2').length
     })
 
     //3
     var max = 0;
-    results.forEach(function(result){
-      if(result.ne >= max){
+    results.forEach(function (result) {
+      if (result.ne >= max) {
         max = result.ne
       }
     })
-    if(max>0){
-      max = max-1
+    if (max > 0) {
+      max = max - 1
     }
     response.push({
-      'title' : 'Numero maximo de entidades en cola',
-      'value' : max
+      'title': 'Numero maximo de entidades en cola',
+      'value': max
     })
 
     //4
     var max = 0;
-    results.forEach(function(result){
-      if(result.ne >= max){
+    results.forEach(function (result) {
+      if (result.ne >= max) {
         max = result.ne
       }
     })
     response.push({
-      'title' : 'Numero maximo de entidades en el sistema',
-      'value' : max
+      'title': 'Numero maximo de entidades en el sistema',
+      'value': max
     })
 
     //5
     aux = 0;
-    if(inPatter.length>0){
-      inPatter.forEach((item)=>{
-        aux += parseFloat(item.t)
-      })
-      aux = (aux / inPatter.length).toFixed(2)
+    if (parseInt(response[0].value) > 0) {
+      for (var i = 0; i < parseInt(response[0].value); i++) {
+        aux +=parseFloat(inPatter[i].t)
+      }
+      aux = (aux /  (parseInt(response[0].value)) ).toFixed(2)
     }
 
     response.push({
-      'title' : 'Tiempo promedio entre llegadas',
-      'value' : aux
+      'title': 'Tiempo promedio entre llegadas',
+      'value': aux
     })
 
 
     //6
     aux = 0;
-    if(servicePatter.length>0){
-      servicePatter.forEach((item)=>{
-        aux += parseFloat(item.t)
-      })
-      aux = (aux / inPatter.length).toFixed(2)
+    if (parseInt(response[1].value) > 0) {
+      for (var i = 0; i < parseInt(response[1].value); i++) {
+        aux += parseFloat(servicePatter[i].t)
+      }
+      aux = (aux /  (parseInt(response[1].value)) ).toFixed(2)
     }
+    console.log(aux)
 
     response.push({
-      'title' : 'Tiempo promedio entre servicios',
-      'value' : aux
+      'title': 'Tiempo promedio entre servicios',
+      'value': aux
     })
- 
-    return  response
+
+    return response
   }
 
 
