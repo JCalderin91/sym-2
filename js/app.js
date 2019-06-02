@@ -6,6 +6,7 @@ $(document).ready(function () {
     }
     if ($('#inicial-conditions')[0].checked) {      
       if ($('#entityInit').val() == '0') {
+
         if(parseFloat($('#timeRequestInit').val()) > parseFloat($('#timeServiceInit').val())){
           return false
         }
@@ -144,6 +145,8 @@ $(document).ready(function () {
             't': stop.value
           })
         }
+        let arr = sortArray(init.le, 'asc')
+        init.le = arr
 
         if (veryfyStop(results, stop)) results.push(init)
         console.log(results)
@@ -287,7 +290,7 @@ $(document).ready(function () {
         console.log('Ultimo evento: ' + lastEvent)
 
         if (lastEvent == 'E3') {
-
+          let newLe = deleteOne(results[results.length - 1].le, 'E2')
 
           init = {
             'tr': results[results.length - 1].le[0].t,
@@ -295,7 +298,7 @@ $(document).ready(function () {
             'ne': parseInt(results[results.length - 1].ne),
             'ri': '-',
             'eg': '-',
-            'le': []
+            'le': newLe
           }
 
 
@@ -489,7 +492,6 @@ $(document).ready(function () {
           if (item.le.length != (key + 1)) {
             subTemplate += `, `;
           }
-          //console.log(key);
         })
 
         if (item.eg != '-') {
@@ -611,8 +613,50 @@ $(document).ready(function () {
       'value': aux
     })
 
+    //#7
+    let resE1 = results.filter(arr => arr.eqo == 'E1')
+    let resE2 = results.filter(arr => arr.eqo == 'E2')
+
+    let sum = 0;
+    resE2.forEach(function(item, key) {
+      sum += parseFloat(resE2[key].tr) - parseFloat(resE1[key].tr)
+    })
+    let total = (sum / resE2.length).toFixed(2)
+    if (isNaN(total)) total = 0
+    response.push({
+      'title': 'Tiempo promedio de espera en el sistema',
+      'value': total
+    })
+
+    //#8
+    sum = 0;
+    total = 0;
+    let cont = 0;
+    resE2.forEach(function(item, key) {
+      if(parseInt(resE1[key].ne) > 1) {
+        sum += parseFloat(resE2[key].tr) - parseFloat(resE1[key].tr)
+        cont++
+      }
+    })
+    total = (sum / cont).toFixed(2)
+    if (isNaN(total)) total = 0
+    response.push({
+      'title': 'Tiempo promedio de espera en cola',
+      'value': total
+    })
+    let subTemplate = '';
+    results[results.length-1].le.forEach(function (el, key) {
+      subTemplate += `<span>${el.e}/${el.t} seg</span>`;
+      if (results[results.length-1].le.length != (key + 1)) {
+        subTemplate += `, `;
+      }
+    })
+    $('#final').html(`El sistema finalizo con un tiempo de ${results[results.length-1].tr}, quedando en la lista de eventos ${subTemplate} `)
     return response
   }
+
+
+
 
 
 });
