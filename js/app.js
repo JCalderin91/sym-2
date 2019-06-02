@@ -651,7 +651,7 @@ $(document).ready(function () {
         subTemplate += `, `;
       }
     })
-    $('#final').html(`El sistema finalizo con un tiempo de ${results[results.length-1].tr}, quedando en la lista de eventos ${subTemplate} `)
+    $('#final').html(`El sistema finalizo con un tiempo de ${results[results.length-1].tr} seg, quedando en la lista de eventos ${subTemplate} `)
     return response
   }
 
