@@ -290,7 +290,7 @@ $(document).ready(function () {
         console.log('Ultimo evento: ' + lastEvent)
 
         if (lastEvent == 'E3') {
-          let newLe = deleteOne(results[results.length - 1].le, 'E2')
+          let newLe = deleteOne(results[results.length - 1].le, 'E3')
 
           init = {
             'tr': results[results.length - 1].le[0].t,
@@ -445,7 +445,7 @@ $(document).ready(function () {
               'tr': results[results.length - 1].tr,
               'eqo': '-',
               'ne': parseInt(results[results.length - 1].ne),
-              'ri': pseudo,
+              'ri': '-',
               'eg': [{
                 'e': 'E2',
                 't': (parseFloat(results[results.length - 1].tr) + parseFloat(t)).toFixed(2)
@@ -651,7 +651,7 @@ $(document).ready(function () {
         subTemplate += `, `;
       }
     })
-    $('#final').html(`El sistema finalizo con un tiempo de ${results[results.length-1].tr} seg, quedando en la lista de eventos ${subTemplate} `)
+    $('#final').html(`El sistema finalizo con un tiempo de ${results[results.length-1].tr} seg, con ${results[results.length-1].ne} en sistema y en la lista de eventos ${subTemplate} `)
     return response
   }
 
