@@ -341,7 +341,7 @@ $(document).ready(function () {
               'tr': results[results.length - 1].le[0].t,
               'eqo': 'E2',
               'ne': parseInt(results[results.length - 1].ne) - 1,
-              'ri': pseudo,
+              'ri': '-',
               'eg': '-',
               'le': sortArray(newLe, 'asc')
             }
