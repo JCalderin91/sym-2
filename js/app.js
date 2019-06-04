@@ -518,7 +518,7 @@ $(document).ready(function () {
       template = ''
       sortArrayEvent(inPatter, 'asc').forEach((item, key) => {
         template += `<tr>
-                      <td>Exp${item.cant+1} = -5 m/c Ln ${item.pseudo} = ${item.t}</td>
+                      <td>Exp${item.cant+1} = -82.5988 m/c Ln ${item.pseudo} = ${item.t}</td>
                     </tr>`;
       })
 
@@ -527,7 +527,7 @@ $(document).ready(function () {
       template = ''
       sortArrayEvent(servicePatter, 'asc').forEach((item, key) => {
         template += `<tr>
-                      <td>Exp${item.cant+1} = -7.5 m/c Ln ${item.pseudo} = ${item.t}</td>
+                      <td>Weilbur${item.cant+1} = 2.01403+ 98.2327*(-ln(${item.pseudo})))^(1/(1.28966) = ${item.t}</td>
                     </tr>`;
       })
       $('#servicePatter').html(template)
