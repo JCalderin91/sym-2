@@ -418,11 +418,11 @@ $(document).ready(function () {
             't': t
           });
 
-          let newTr = results[results.length - 1].le[0].t
+          let newTr = parseFloat(results[results.length - 1].le[0].t) 
 
           let newLe = deleteOne(results[results.length - 1].le, 'E1')
           init = {
-            'tr': newTr,
+            'tr': (newTr + parseFloat(t)).toFixed(2),
             'eqo': 'E1',
             'ne': parseInt(results[results.length - 1].ne) + 1,
             'ri': pseudo,
