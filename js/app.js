@@ -353,7 +353,7 @@ $(document).ready(function () {
 
 
 
-          if (parseFloat(init.ne) == 0) {
+          if (parseFloat(init.ne) == 0 && init.le.filter((result) => result.e == 'E1').length == 0) {
             pseudo = Math.random().toFixed(3);
             t = generateEventIn(pseudo);
 
