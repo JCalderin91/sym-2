@@ -22,11 +22,12 @@ $(document).ready(function () {
   //Cuando se haga click en el boton para reiniciar
   //Generador de solicitud de servicio
   function generateEventIn(pseudo) {
-    return (-5 * Math.log(pseudo)).toFixed(2)
+    return (-92.8286 * Math.log(pseudo)).toFixed(2)
   }
   //Generador de evento de salida01
   function generateEventService(pseudo) {
-    return (-7.5 * Math.log(pseudo)).toFixed(2)
+    //return (-7.5 * Math.log(pseudo)).toFixed(2)
+    return ((2.01403) + (98.2327)*((-Math.log(pseudo)))**(1/(1.28966))).toFixed(2)
   }
   //Ordenar de mayor a menor la lista de eventos
   function sortArray(arr, dir) {
@@ -149,7 +150,7 @@ $(document).ready(function () {
         init.le = arr
 
         if (veryfyStop(results, stop)) results.push(init)
-        console.log(results)
+        //console.log(results)
 
       } else {
 
@@ -283,14 +284,14 @@ $(document).ready(function () {
 
 
 
-        console.log(results)
+        //console.log(results)
         if (results[results.length - 1].le.length > 0) {
           lastEvent = results[results.length - 1].le[0].e
         }
-        console.log('Ultimo evento: ' + lastEvent)
+        //console.log('Ultimo evento: ' + lastEvent)
 
         if (lastEvent == 'E3') {
-          let newLe = deleteOne(results[results.length - 1].le, 'E2')
+          let newLe = deleteOne(results[results.length - 1].le, 'E3')
 
           init = {
             'tr': results[results.length - 1].le[0].t,
@@ -341,7 +342,7 @@ $(document).ready(function () {
               'tr': results[results.length - 1].le[0].t,
               'eqo': 'E2',
               'ne': parseInt(results[results.length - 1].ne) - 1,
-              'ri': pseudo,
+              'ri': '-',
               'eg': '-',
               'le': sortArray(newLe, 'asc')
             }
@@ -445,7 +446,7 @@ $(document).ready(function () {
               'tr': results[results.length - 1].tr,
               'eqo': '-',
               'ne': parseInt(results[results.length - 1].ne),
-              'ri': pseudo,
+              'ri': '-',
               'eg': [{
                 'e': 'E2',
                 't': (parseFloat(results[results.length - 1].tr) + parseFloat(t)).toFixed(2)
@@ -469,7 +470,7 @@ $(document).ready(function () {
 
         limit++ //Por seguridad
 
-      } while (veryfyStop(results, stop) && limit < 200 && lastEvent != 'E3')
+      } while (veryfyStop(results, stop) && limit < 800 && lastEvent != 'E3')
 
 
       var respuestas = verify__results(results, inPatter, servicePatter)
@@ -606,7 +607,7 @@ $(document).ready(function () {
       }
       aux = (aux / (parseInt(response[1].value))).toFixed(2)
     }
-    console.log(aux)
+    //console.log(aux)
 
     response.push({
       'title': 'Tiempo promedio entre servicios',
@@ -651,7 +652,7 @@ $(document).ready(function () {
         subTemplate += `, `;
       }
     })
-    $('#final').html(`El sistema finalizo con un tiempo de ${results[results.length-1].tr} seg, quedando en la lista de eventos ${subTemplate} `)
+    $('#final').html(`El sistema finalizo con un tiempo de ${results[results.length-1].tr} seg, con ${results[results.length-1].ne} entidades en sistema y en la lista de eventos ${subTemplate} `)
     return response
   }
 
