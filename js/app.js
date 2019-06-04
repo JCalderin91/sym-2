@@ -312,7 +312,7 @@ $(document).ready(function () {
 
         //E2
         if (lastEvent == 'E2') {
-          let nuevo__reloj = parseFloat(results[results.length - 1].le.filter((result) => result.e == 'E2')[0].t) + parseFloat(results[results.length - 1].tr)
+          let nuevo__reloj = parseFloat(results[results.length - 1].le.filter((result) => result.e == 'E2')[0].t) 
              
           let newLe = deleteOne(results[results.length - 1].le, 'E2')
           pseudo = Math.random().toFixed(3);
@@ -412,7 +412,7 @@ $(document).ready(function () {
 
         if (lastEvent == 'E1') {
 
-          let nuevo__reloj = parseFloat(results[results.length - 1].le.filter((result) => result.e == 'E1')[0].t) + parseFloat(results[results.length - 1].tr)
+          let nuevo__reloj = parseFloat(results[results.length - 1].le.filter((result) => result.e == 'E1')[0].t)
 
           pseudo = Math.random().toFixed(3);
           t = generateEventIn(pseudo);
