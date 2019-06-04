@@ -22,7 +22,7 @@ $(document).ready(function () {
   //Cuando se haga click en el boton para reiniciar
   //Generador de solicitud de servicio
   function generateEventIn(pseudo) {
-    return (-92.8286 * Math.log(pseudo)).toFixed(2)
+    return (-82.5988 * Math.log(pseudo)).toFixed(2)
   }
   //Generador de evento de salida01
   function generateEventService(pseudo) {
@@ -645,6 +645,7 @@ $(document).ready(function () {
       'title': 'Tiempo promedio de espera en cola',
       'value': total
     })
+    
     let subTemplate = '';
     results[results.length-1].le.forEach(function (el, key) {
       subTemplate += `<span>${el.e}/${el.t} seg</span>`;
