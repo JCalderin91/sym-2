@@ -22,6 +22,7 @@ $(document).ready(function () {
   //Cuando se haga click en el boton para reiniciar
   //Generador de solicitud de servicio
   function generateEventIn(pseudo) {
+    console.log((-82.5988 * Math.log(pseudo)).toFixed(2))
     return (-82.5988 * Math.log(pseudo)).toFixed(2)
   }
   //Generador de evento de salida01
@@ -241,11 +242,11 @@ $(document).ready(function () {
               'ri': pseudo,
               'eg': [{
                 'e': 'E1',
-                't': (parseFloat(inPatter[inPatter.length - 2].t) + parseFloat(t)).toFixed(2)
+                't': ( parseFloat(inPatter[inPatter.length - 2].t) + parseFloat(t)).toFixed(2)
               }],
               'le': sortArray(newLe.concat({
                 'e': 'E1',
-                't': (parseFloat(inPatter[inPatter.length - 2].t) + parseFloat(t)).toFixed(2)
+                't': ( parseFloat(inPatter[inPatter.length - 2].t) + parseFloat(t)).toFixed(2)
               }), 'asc')
 
             }
@@ -433,11 +434,11 @@ $(document).ready(function () {
             'ri': pseudo,
             'eg': [{
               'e': 'E1',
-              't': (parseFloat(newTr) + parseFloat(t)).toFixed(2)
+              't': (parseFloat(nuevo__reloj) + parseFloat(t)).toFixed(2)
             }],
             'le': sortArray(newLe.concat({
               'e': 'E1',
-              't': (parseFloat(newTr) + parseFloat(t)).toFixed(2)
+              't': (parseFloat(nuevo__reloj) + parseFloat(t)).toFixed(2)
             }), 'asc')
 
           }
