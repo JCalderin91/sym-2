@@ -312,6 +312,8 @@ $(document).ready(function () {
 
         //E2
         if (lastEvent == 'E2') {
+          let nuevo__reloj = parseFloat(results[results.length - 1].le.filter((result) => result.e == 'E2')[0].t) + parseFloat(results[results.length - 1].tr)
+             
           let newLe = deleteOne(results[results.length - 1].le, 'E2')
           pseudo = Math.random().toFixed(3);
           t = generateEventService(pseudo);
@@ -324,7 +326,7 @@ $(document).ready(function () {
 
           if ((parseInt(results[results.length - 1].ne) - 1) > 0) {
             init = {
-              'tr': results[results.length - 1].le[0].t,
+              'tr': nuevo__reloj.toFixed(2),
               'eqo': 'E2',
               'ne': parseInt(results[results.length - 1].ne) - 1,
               'ri': pseudo,
@@ -367,7 +369,7 @@ $(document).ready(function () {
 
             let newLe = deleteOne(results[results.length - 1].le, 'E1')
             init = {
-              'tr': newTr,
+              'tr': (parseFloat(newTr) + parseFloat(t)).toFixed(2),
               'eqo': 'E1',
               'ne': parseInt(results[results.length - 1].ne) + 1,
               'ri': pseudo,
@@ -409,6 +411,9 @@ $(document).ready(function () {
         }
 
         if (lastEvent == 'E1') {
+
+          let nuevo__reloj = parseFloat(results[results.length - 1].le.filter((result) => result.e == 'E1')[0].t) + parseFloat(results[results.length - 1].tr)
+
           pseudo = Math.random().toFixed(3);
           t = generateEventIn(pseudo);
 
@@ -422,7 +427,7 @@ $(document).ready(function () {
 
           let newLe = deleteOne(results[results.length - 1].le, 'E1')
           init = {
-            'tr': newTr.toFixed(2),
+            'tr': nuevo__reloj.toFixed(2),
             'eqo': 'E1',
             'ne': parseInt(results[results.length - 1].ne) + 1,
             'ri': pseudo,
