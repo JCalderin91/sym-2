@@ -1,5 +1,15 @@
 //Cuando el documento este cargafo ejecutar
 $(document).ready(function () {
+
+  $('#instanciar').click(function() {
+    $("table").tableExport({
+      formats: ["xlsx"], //Tipo de archivos a exportar ("xlsx","txt", "csv", "xls")
+      position: 'button',  // Posicion que se muestran los botones puedes ser: (top, bottom)
+      bootstrap: true,//Usar lo estilos de css de bootstrap para los botones (true, false)
+      fileName: "Simulacion",    //Nombre del archivo 
+    });
+  })
+
   function validate() {
     if(parseInt($('#time input').val()) <= 0){
       return false
@@ -671,12 +681,7 @@ $(document).ready(function () {
     $('#final').html(`El sistema finalizo con un tiempo de ${results[results.length-1].tr} seg, con ${results[results.length-1].ne} entidades en sistema y en la lista de eventos ${subTemplate} `)
     
 
-    $("table").tableExport({
-      formats: ["xlsx"], //Tipo de archivos a exportar ("xlsx","txt", "csv", "xls")
-      position: 'button',  // Posicion que se muestran los botones puedes ser: (top, bottom)
-      bootstrap: true,//Usar lo estilos de css de bootstrap para los botones (true, false)
-      fileName: "Simulacion",    //Nombre del archivo 
-    });
+
 
 
     return response
